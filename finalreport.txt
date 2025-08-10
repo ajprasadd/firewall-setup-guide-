@@ -1,0 +1,50 @@
+
+CODES USED FOR FIREWALL SETUP GUIDE 
+
+sudo ufw status
+sudo apt install ufw -y
+sudo ufw enable
+sudo ufw status numbered
+sudo ufw deny 23/tcp
+telnet localhost 23
+sudo ufw allow 22/tcp
+sudo ufw delete <rule_number>
+
+
+1. Check and Install UFW
+sudo ufw status
+sudo apt install ufw -y
+
+2. Enable UFW
+sudo ufw enable
+
+3. View Current Rules
+sudo ufw status numbered
+
+4. Block Inbound Traffic on Port 23 (Telnet)
+sudo ufw deny 23/tcp
+
+5. Test the Block Rule
+telnet localhost 23
+Expected output:
+Trying 127.0.0.1...
+telnet: Unable to connect to remote host: Connection refused
+
+6. Allow SSH (Port 22)
+sudo ufw allow 22/tcp
+
+7. Remove the Test Rule
+Find the rule number:
+sudo ufw status numbered
+Delete it:
+sudo ufw delete <rule_number>
+
+Firewall Filtering Summary
+Function: UFW acts as a frontend for iptables, controlling network traffic.
+Filtering Method: Uses rules to allow or deny packets based on port, protocol, and direction.
+Default Policy: Deny incoming, allow outgoing.
+Importance: Protects the system from unauthorized access and limits the attack surface.
+
+Conclusion
+The firewall was successfully configured to block Telnet (port 23) traffic and allow SSH (port 22) connections. Testing confirmed the rules worked as expected. The system was restored to its original firewall configuration after testing.
+

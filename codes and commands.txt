@@ -1,0 +1,46 @@
+ 🔹 Linux: Using UFW (Uncomplicated Firewall)
+1. Check if UFW is Installed & Enabled
+sudo ufw status
+If it says command not found, install it:
+sudo apt install ufw -y
+
+2. Enable UFW
+sudo ufw enable
+This will start enforcing firewall rules.
+
+3. List Current Rules
+sudo ufw status numbered
+You’ll see something like:
+Status: active
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW       Anywhere
+
+4. Block Inbound Traffic on Port 23 (Telnet)
+sudo ufw deny 23/tcp
+Check rules again:
+sudo ufw status numbered
+
+5. Test the Rule
+Try connecting to port 23 (it should fail):
+telnet localhost 23
+If telnet is not installed:
+sudo apt install telnet -y
+You should see:
+Connection refused
+
+6. Allow SSH (Port 22)
+sudo ufw allow 22/tcp
+
+7. Remove the Test Rule (Restore Original State)
+Find the rule number:
+sudo ufw status numbered
+Then delete:
+sudo ufw delete <rule_number>
+
+8. How UFW Filters Traffic (Summary)
+UFW works as a frontend for iptables.
+It filters packets before they reach services.
+Uses ALLOW or DENY rules for specific ports and protocols.
+Works on inbound and outbound traffic separately.
+Default policy: deny incoming, allow outgoing.
